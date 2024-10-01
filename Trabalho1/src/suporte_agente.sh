@@ -1,17 +1,17 @@
 #!/bin/bash
 
-#Verficar se o named pipe existe
+# Verficar se o named pipe existe
 if [ -z $1 ]; then
-    echo "Nao existe argumento"
+    echo "Suporte_agente: Nao existe argumento"
     exit 1
 fi
 
 
 if [ -p $1 ]; then
-    echo "Pipe existe"
+    echo "Suporte_agente: Pipe existe"
 else
     while [ ! -p $1 ]; do
-        echo "Pipe ainda nao existe"
+        echo "Suporte_agente: Pipe ainda nao existe"
         sleep $((RANDOM % 5 + 1))
     done
 fi
@@ -19,14 +19,14 @@ fi
 
 
 
-#Verficar a mensagem do named pipe
+# Verficar a mensagem do named pipe
+echo "Suporte_agente: A ler mensagens"
 while true; do
-    if read mensagem < "$1"; then
-        if [ "$mensagem" = "quit" ]; then
-            echo "Encerrar"
-            exit 0
-        fi
-        echo "A mensagem recebida foi: $mensagem"
-        sleep 1
+    read mensagem < $1
+    if [ "$mensagem" = "quit" ]; then
+        echo "Suporte_agente: A encerrar"
+        exit 0
     fi
+    echo "Suporte_agente: Mensagem recebida $mensagem"
+    sleep 1
 done

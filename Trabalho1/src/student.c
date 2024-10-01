@@ -10,15 +10,15 @@ int main(int argc, char const *argv[])
 {
     //Verefica o argumento
     if(argc != 3){
-        printf("O numero de argumentos dados é o errado\n");
+        printf("Student: O numero de argumentos dados é o errado\n");
         return 1;
     }
 
 
-    //Abre o named pipe para leitura e escrita
-    int operacaoAbrir = open(argv[1], O_WRONLY);
-    if(operacaoAbrir == -1){
-        perror("Erro ao abrir o pipe");
+    // Abre o named pipe para leitura e escrita
+    int fd = open(argv[1], O_WRONLY);
+    if(fd == -1){
+        perror("Student: Erro ao abrir o pipe");
         return 1;
     }
 
@@ -26,13 +26,13 @@ int main(int argc, char const *argv[])
     //Escrever no named pipe
     const char *mensagem = argv[2];
 
-    if (write(operacaoAbrir, mensagem, sizeof(mensagem)) == -1) {
-        perror("Erro ao escrever no pipe");
-        close(operacaoAbrir);
+    if (write(fd, mensagem, strlen(mensagem) + 1) == -1) {
+        perror("Student: Erro ao escrever no pipe");
+        close(fd);
         return 1;
     }
-    printf("Mensagem enviada: %s\n", mensagem);
+    printf("Student: Mensagem enviada %s\n", mensagem);
 
-    close(operacaoAbrir);
+    close(fd);
     return 0;
 }
