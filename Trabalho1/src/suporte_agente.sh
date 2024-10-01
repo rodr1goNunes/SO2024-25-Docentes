@@ -22,12 +22,11 @@ fi
 #Verficar a mensagem do named pipe
 while true; do
     if read mensagem < "$1"; then
-        echo "Mensagem recebida"
         if [ "$mensagem" = "quit" ]; then
             echo "Encerrar"
             exit 0
         fi
         echo "A mensagem recebida foi: $mensagem"
+        sleep 1
     fi
-    sleep 1
 done

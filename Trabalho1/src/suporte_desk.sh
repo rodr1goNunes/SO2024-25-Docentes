@@ -26,6 +26,14 @@ fi
 
 
 
+# Por suporte_agente em backGround
+echo "A por o script suporte_agente em background"
+chmod +x suporte_agente.sh
+./suporte_agente.sh $nomeDoPipe &
+
+
+
+
 # Por students em backGround
 if [ -z "$2" ]; then
     echo "2 argumento vazio, a ser posto em backGround 3 students.c"
@@ -35,18 +43,12 @@ else
 fi
 
 echo "A por o programa student em background"
+gcc student.c
 for c in $(seq 1 $numeroStudents); do
     ./a.out $nomeDoPipe "estudante $c" &
     echo "$c processo criado em back ground" 
+    sleep 1
 done
-
-
-
-
-# Por suporte_agente em backGround
-echo "A por o script suporte_agente em background"
-chmod +x suporte_agente.sh
-./suporte_agente.sh $nomeDoPipe &
 
 
 
