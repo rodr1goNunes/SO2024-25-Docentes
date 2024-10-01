@@ -12,21 +12,25 @@ if [ -p $1 ]; then
 else
     while [ ! -p $1 ]; do
         echo "Suporte_agente: Pipe ainda nao existe"
-        sleep $((RANDOM % 5 + 1))
+        sleep 1
     done
 fi
 
 
 
 
-# Verficar a mensagem do named pipe
+# Ler mensagens
 echo "Suporte_agente: A ler mensagens"
-while true; do
-    read mensagem < $1
-    if [ "$mensagem" = "quit" ]; then
-        echo "Suporte_agente: A encerrar"
-        exit 0
+while read message; do
+
+    if [ "$message" = "quit" ]; then
+        echo "Suporte_agente: Encerrar"
+        break
     fi
-    echo "Suporte_agente: Mensagem recebida $mensagem"
-    sleep 1
-done
+
+    echo "Suporte_agente: Mensagem recebida $message"
+
+    echo "Suporte_agente: Espera aleatoria"
+    sleep $((RANDOM % 5 + 1))
+
+done < "$1"

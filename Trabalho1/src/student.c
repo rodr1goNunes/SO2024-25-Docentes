@@ -6,7 +6,7 @@
 #include <sys/stat.h>
 #include <string.h>
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
     //Verefica o argumento
     if(argc != 3){
@@ -24,14 +24,13 @@ int main(int argc, char const *argv[])
 
 
     //Escrever no named pipe
-    const char *mensagem = argv[2];
+    char *mensagem = argv[2];
 
     if (write(fd, mensagem, strlen(mensagem) + 1) == -1) {
         perror("Student: Erro ao escrever no pipe");
         close(fd);
         return 1;
     }
-    printf("Student: Mensagem enviada %s\n", mensagem);
 
     close(fd);
     return 0;

@@ -37,6 +37,16 @@ fi
 
 
 
+# Por students em backGround
+echo "Suporte_desk: A por o programa student em background"
+gcc student.c
+for c in $(seq 1 $numeroStudents); do
+    ./a.out $nomeDoPipe "Estudante $c"$'\n' &
+done
+
+
+
+
 # Por suporte_agente em backGround
 echo "Suporte_desk: A por o script suporte_agente em background"
 chmod +x suporte_agente.sh
@@ -45,19 +55,9 @@ chmod +x suporte_agente.sh
 
 
 
-# Por students em backGround
-echo "Suporte_desk: A por o programa student em background"
-gcc student.c
-for c in $(seq 1 $numeroStudents); do
-    ./a.out $nomeDoPipe "Estudante $c" &
-    sleep 1
-done
-
-
-
-
 # Mandar texto para o named pipe
 echo "Suporte_desk: A encerrar suporte_agente"
+sleep 1
 echo "quit" > $nomeDoPipe
 
 
